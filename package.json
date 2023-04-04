@@ -1,0 +1,19 @@
+{
+  "name": "telemetrix",
+  "version": "1.0.0",
+  "description": "An open source modular customizable widget dashboard for bi-directional radio telemetry. For use with robots or other remote projects.",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AnthonyScalise/TelemetriX.git"
+  },
+  "author": "Anthony Scalise",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/AnthonyScalise/TelemetriX/issues"
+  },
+  "homepage": "https://github.com/AnthonyScalise/TelemetriX#readme"
+}
