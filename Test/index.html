@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Modular Widget Board</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <style>
+        .widget {
+            position: absolute;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+        }
+
+        .widget-header {
+            cursor: move;
+            background-color: green;
+        }
+
+        .widget-resize-handle {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 20px;
+            height: 20px;
+            background-color: green;
+            cursor: nwse-resize;
+        }
+
+        .widget-close {
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="widget-board" style="position: relative; width: 100%; height: 500px; background-color: #f1f1f1;"></div>
+
+    <script>
+        let activeWidget = null;
+        let initialX, initialY, currentX, currentY;
+
+        function createWidget() {
+            let widget = document.createElement('div');
+            widget.classList.add('widget');
+            widget.style.width = '200px';
+            widget.style.height = '200px';
+            widget.style.left = '0px';
+            widget.style.top = '0px';
+
+            let header = document.createElement('div');
+            header.classList.add('widget-header');
+            header.textContent = 'Widget Header';
+            widget.appendChild(header);
+
+            let closeButton = document.createElement('span');
+            closeButton.classList.add('widget-close');
+            closeButton.textContent = 'x';
+            header.appendChild(closeButton);
+
+            let resizeHandle = document.createElement('div');
+            resizeHandle.classList.add('widget-resize-handle');
+            widget.appendChild(resizeHandle);
+
+            document.getElementById('widget-board').appendChild(widget);
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            createWidget();
+            createWidget();
+            createWidget();
+        });
+
+        document.addEventListener('mousedown', function (e) {
+            if (e.target.classList.contains('widget-header')) {
+                activeWidget = e.target.parentNode;
+                initialX = e.clientX - activeWidget.offsetLeft;
+                initialY = e.clientY - activeWidget.offsetTop;
+            }
+
+            if (e.target.classList.contains('widget-resize-handle')) {
+                activeWidget = e.target.parentNode;
+                initialX = e.clientX - activeWidget.offsetLeft - activeWidget.offsetWidth + 20; // 20 is the width of the resize handle
+                initialY = e.clientY - activeWidget.offsetTop - activeWidget.offsetHeight + 20; // 20 is the height of the resize handle
+            }
+        });
+
+        document.addEventListener('mouseup', function (e) {
+            activeWidget = null;
+        });
+
+        document.addEventListener('mousemove', function (e) {
+            if (activeWidget) {
+                e.preventDefault();
+                currentX = e.clientX - initialX;
+                currentY = e.clientY - initialY;
+
+                // Adjust currentX and currentY to make sure the widget stays inside the board
+                currentX = Math.max(currentX, 0);
+                currentX = Math.min(currentX, document.getElementById('widget-board').offsetWidth - activeWidget.offsetWidth);
+                currentY = Math.max(currentY, 0);
+                currentY = Math.min(currentY, document.getElementById('widget-board').offsetHeight - activeWidget.offsetHeight);
+
+                if (e.target.classList.contains('widget-header')) {
+                    activeWidget.style.left = currentX + 'px';
+                    activeWidget.style.top = currentY + 'px';
+                }
+
+                if (e.target.classList.contains('widget-resize-handle')) {
+                    let newWidth = e.clientX - activeWidget.offsetLeft - initialX + 20; // 20 is the width of the resize handle
+                    let newHeight = e.clientY - activeWidget.offsetTop - initialY + 20; // 20 is the height of the resize handle
+
+                    // Adjust newWidth and newHeight to make sure the widget doesn't become too small
+                    newWidth = Math.max(newWidth, 100);
+                    newHeight = Math.max(newHeight, 100);
+
+                    activeWidget.style.width = newWidth + 'px';
+                    activeWidget.style.height = newHeight + 'px';
+                }
+            }
+        });
+
+        document.addEventListener('click', function (e) {
+            if (e.target.classList.contains('widget-close')) {
+                e.target.parentNode.parentNode.removeChild(e.target.parentNode);
+            }
+        });
+    </script>
+</body>
+
+</html>
