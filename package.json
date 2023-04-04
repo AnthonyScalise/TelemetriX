@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/AnthonyScalise/TelemetriX/issues"
   },
-  "homepage": "https://github.com/AnthonyScalise/TelemetriX#readme"
+  "homepage": "https://github.com/AnthonyScalise/TelemetriX#readme",
+  "dependencies": {
+    "electron": "^24.0.0"
+  }
 }
