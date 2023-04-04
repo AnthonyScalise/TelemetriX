@@ -1,4 +1,4 @@
 node_modules/
 .vscode
-.app.py.txt
+/app.txt
 src/main_old.js.txt
