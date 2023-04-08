@@ -1,37 +1,57 @@
 
-
 class Storage {
 
-    constructor() {
-        this.widgetData = {
-            'buttons': [],
-            'inputs': [],
-            'displays': [],
-            'consoles': [],
-            'graphs': [],
-            'lights': [],
-        }
+    static defaultSettings = {
+        'comPort': '',
+        'dragging': {
+            'grid': false,
+            'gridSize': 1,
+            'edgeSnap': true,
+        },
+        'appTheme': {
+            'primaryColor': '#757575',
+            'secondaryColor': '#000000',
+        },
+        'widgetConfig': {},
+    }
 
-        this.storage = window.localStorage;
+    static defaultWidgetConfig = {};
+    static widgetNames = [];
+
+    static createDefaultWidgetConfig() {
+        const widgetTypes = Array.from(Widget.getChildren());
+        widgetTypes.forEach(widgetClass => {
+            let widgetName = widgetClass.name.replace('Widget', '').toLowerCase() + 's';
+            this.widgetNames.push(widgetName);
+            this.defaultWidgetConfig[widgetName] = widgetClass.defaultJson;
+        });
+    }
+
+    constructor() {
+        Storage.createDefaultWidgetConfig();
+        this.widgetData = {}
+        Storage.widgetNames.forEach(widgetName => { this.widgetData[widgetName] = []; });
+        this.storageLocal = window.localStorage;
         this.settings;
         this.widgetConfig;
-        if(!this.doesExist("settings")) {
+        if (!this.doesExist("settings")) {
             this.widgetConfig = JSON.parse(JSON.stringify(Storage.defaultWidgetConfig));
             this.settings = JSON.parse(JSON.stringify(Storage.defaultSettings));
+
             this.saveSettings();
         } else {
-            this.settings = JSON.parse(this.storage.getItem("settings"));
+            this.settings = JSON.parse(this.storageLocal.getItem("settings"));
             this.widgetConfig = this.settings.widgetConfig;
         }
     }
 
     doesExist(itemName) {
-        return((JSON.parse(this.storage.getItem(itemName)))? true : false);
+        return ((JSON.parse(this.storageLocal.getItem(itemName))) ? true : false);
     }
 
     saveSettings() {
         this.settings.widgetConfig = this.widgetConfig;
-        this.storage.setItem("settings", JSON.stringify(this.settings));
+        this.storageLocal.setItem("settings", JSON.stringify(this.settings));
     }
 
     resetSettings() {
@@ -50,25 +70,4 @@ class Storage {
     // TODO: Implement stuff for widget data that includes names, sizes, and positions
 }
 
-Storage.defaultSettings = {
-    'comPort': '',
-    'dragging': {
-        'grid': false,
-        'gridSize': 1,
-        'edgeSnap': true,
-    },
-    'appTheme': {
-        'primaryColor': '#00f652',
-        'secondaryColor': '#000000',
-    },
-    'widgetConfig': {},
-}
-
-Storage.defaultWidgetConfig = {
-    'buttons': [ButtonWidget.defaultJson],
-    'inputs': [InputWidget.defaultJson],
-    'displays': [DisplayWidget.defaultJson],
-    'consoles': [ConsoleWidget.defaultJson],
-    'graphs': [GraphWidget.defaultJson],
-    'lights': [LightWidget.defaultJson],
-}
+window.storage = new Storage();

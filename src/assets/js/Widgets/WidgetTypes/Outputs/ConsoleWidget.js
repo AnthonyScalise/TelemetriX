@@ -1,5 +1,4 @@
 
-
 class ConsoleWidget extends Widget {
 
     constructor(name) {
@@ -9,9 +8,8 @@ class ConsoleWidget extends Widget {
         this.addConsoleWidgetSpecificHTML();
     }
 
-
     addConsoleWidgetSpecificHTML() {
-        this.widgetBlock.style.setProperty("min-width", "187px");        
+        this.widgetBlock.style.setProperty("min-width", "187px");
         this.widgetBlock.style.setProperty("min-height", "213px");
         this.content.style.setProperty("padding", "15px 10px 7px");
         this.content.style.setProperty("min-width", "175px");
@@ -40,28 +38,31 @@ class ConsoleWidget extends Widget {
         this.consoleClearButton.className = "btn btn-secondary btn-sm";
         this.consoleClearButton.style.setProperty("padding", "0px 5px");
         this.consoleClearButton.style.setProperty("margin", "0px 5px 0px 0px");
-        let clearLogData = function(widget) { return function() { 
-            swal("Are you sure?",("This will clear the \""+widget.name+"\" log console"), {buttons: ["Cancel", "Yes"]}).then((value) => {
-                if(value == true) {
-                    widget.value = String(""); 
-                    widget.textArea.value = String("");
-                }
-            });
-        }}(this);
+        let clearLogData = function (widget) {
+            return function () {
+                swal("Are you sure?", ("This will clear the \"" + widget.name + "\" log console"), { buttons: ["Cancel", "Yes"] }).then((value) => {
+                    if (value == true) {
+                        widget.value = String("");
+                        widget.textArea.value = String("");
+                    }
+                });
+            }
+        }(this);
         this.consoleClearButton.addEventListener("click", clearLogData);
         this.buttonSpace.appendChild(this.consoleClearButton);
         this.consoleSaveButton = document.createElement("BUTTON");
         this.consoleSaveButton.appendChild(document.createTextNode("Download"));
         this.consoleSaveButton.className = "btn btn-secondary btn-sm";
         this.consoleSaveButton.style.setProperty("padding", "0px 5px");
-        let saveLogDataFile = function(widget) { return function() {
-            pywebview.api.download_dialog((widget.name+'_LogSave.txt'), widget.value);
-        }}(this);
+        let saveLogDataFile = function (widget) {
+            return function () {
+                pywebview.api.download_dialog((widget.name + '_LogSave.txt'), widget.value);
+            }
+        }(this);
         this.consoleSaveButton.addEventListener("click", saveLogDataFile);
         this.buttonSpace.appendChild(this.consoleSaveButton);
         this.content.appendChild(this.buttonSpace);
     }
-
 
     static getWidgetFromList(name) {
         for (let i = 0; i < ConsoleWidget.widgetList.length; i++) {
@@ -74,4 +75,6 @@ class ConsoleWidget extends Widget {
 ConsoleWidget.numberOfWidgets = 0;
 ConsoleWidget.updateFunction = null;
 ConsoleWidget.widgetList = [];
-ConsoleWidget.defaultJson = {'title':''};
+ConsoleWidget.defaultJson = [{ 'title': '' }];
+
+Widget._register(ConsoleWidget);

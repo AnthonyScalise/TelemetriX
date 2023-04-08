@@ -1,20 +1,18 @@
 
 class Widget {
 
-    // static pywebview;
-
-    // static get pywebview() {
-    //     if(!this.pywebview) {
-    //         throw new Error('pywebview is not set');
-    //     }
-    //     return this.pywebview;
-    // }
-
-    // static setPywebview(pywebview) {
-    //     this.pywebview = pywebview;
-    // }
+    static widgetClassImports = [
+        'Inputs/ButtonWidget.js',
+        'Inputs/InputWidget.js',
+        'Outputs/DisplayWidget.js',
+        'Outputs/ConsoleWidget.js',
+        'Outputs/LightWidget.js',
+        'Outputs/GraphWidget.js',
+    ]
 
     constructor(name, widgetType, resizingType, minHeight, minWidth) {
+        if (this.constructor === Widget)
+            throw new Error("Cannot instantiate Widget directly");
         this.name = name;
         this.type = widgetType;
         this.resizingType = resizingType;
@@ -23,18 +21,28 @@ class Widget {
         this.createWidgetHTML();
     }
 
-    // static setWidgetSettings(widgetSettings) {
-    //     Widget.widgetSettings = widgetSettings;
-    // }
+    static _register(child) {
+        if (!this.registry)
+            this.registry = new Map();
+        let children = this.registry.get(this);
+        if (!children) {
+            children = new Set();
+            this.registry.set(this, children);
+        }
+        children.add(child);
+    }
+
+    static getChildren() {
+        return this.registry && this.registry.get(this) || new Set();
+    }
 
     createWidgetHTML() {
         this.widgetBlock = document.createElement("div");
         this.widgetBlock.classList.add("widgetBlock");
-        this.widgetBlock.style.setProperty("min-height", (String(this.minHeight)+"px"));
-        this.widgetBlock.style.setProperty("min-width", (String(this.minWidth)+"px"));
+        this.widgetBlock.style.setProperty("min-height", (String(this.minHeight) + "px"));
+        this.widgetBlock.style.setProperty("min-width", (String(this.minWidth) + "px"));
         this.sizers = document.createElement("div");
         this.sizers.className = "resizers";
-        // let primeColor = JSON.parse(JSON.parse(localStorage.getItem("settingsConfig"))["colorSettings"])["primaryColor"];
         this.sizers.style.setProperty("background-color", storage.settings.appTheme.primaryColor);
         this.header = document.createElement("div");
         this.header.className = "widgetHeader unselectable";
@@ -61,7 +69,6 @@ class Widget {
             containment: widgetBoard,
             scroll: false,
         });
-        // $(this.widgetBlock).draggable({ grid: [Widget.widgetSettings.gridSize, Widget.widgetSettings.gridSize] });
         let gridSize = storage.settings.dragging.gridSize;
         let snap = storage.settings.dragging.edgeSnap;
         $(this.widgetBlock).draggable({ grid: [gridSize, gridSize] });
@@ -86,5 +93,9 @@ class Widget {
     makeNotResizable() {
 
     }
-
 }
+
+
+Widget.widgetClassImports.forEach((importString) => {
+    document.write(('<script src="../assets/js/Widgets/WidgetTypes/' + importString + '"></script>'));
+});

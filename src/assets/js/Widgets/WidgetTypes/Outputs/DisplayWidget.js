@@ -1,5 +1,4 @@
 
-
 class DisplayWidget extends Widget {
 
     constructor(name, initialValue) {
@@ -10,12 +9,8 @@ class DisplayWidget extends Widget {
         this.addDisplayWidgetSpecificHTML();
     }
 
-
     addDisplayWidgetSpecificHTML() {
         this.widgetBlock.style.setProperty("height", "100px");
-        // let colors = JSON.parse(JSON.parse(localStorage.getItem("settingsConfig"))["colorSettings"]);
-        // let primeColor = colors["primaryColor"];
-        // let secondColor = colors["secondaryColor"];
         this.widgetBlock.style.setProperty("background-color", storage.settings.appTheme.primaryColor);
         this.header.appendChild(document.createTextNode(this.name));
         this.textNode = document.createTextNode(this.initialValue);
@@ -23,7 +18,6 @@ class DisplayWidget extends Widget {
         this.content.style.color = storage.settings.appTheme.secondaryColor;
         this.content.style.setProperty("font-weight", "bold");
     }
-
 
     static getWidgetFromList(name) {
         for (let i = 0; i < DisplayWidget.widgetList.length; i++) {
@@ -36,4 +30,6 @@ class DisplayWidget extends Widget {
 DisplayWidget.numberOfWidgets = 0;
 DisplayWidget.updateFunction = null;
 DisplayWidget.widgetList = [];
-DisplayWidget.defaultJson = {'title':'', 'value':''};
+DisplayWidget.defaultJson = [{ 'title': '', 'value': '' }];
+
+Widget._register(DisplayWidget);

@@ -1,9 +1,9 @@
 :root {
     --darkModeMain: #404040;
-    --secondaryColor: #000000;
-    --primaryColor: #00f652;
-    --primaryColor2: #01b83e;
-    --primaryColor3: #029633;
+    --secondaryColor: hsl(0, 0%, 0%);
+    --primaryColor: #757575;
+    --primaryColor2: #434343;
+    --primaryColor3: #111111;
 }
 
 html {
@@ -17,14 +17,14 @@ body {
 .widgetContent {
     font-weight: bold;
 }
-  
+
 .btn .btn-primary .btn-sm {
     font-size: bold;
 }
 
 button {
     font-weight: bold;
- }
+}
 
 .selectpicker {
     font-weight: bold;
@@ -33,6 +33,7 @@ button {
 .navbar-custom {
     background-color: var(--primaryColor);
 }
+
 .navbar-custom .nav-link {
     color: var(--secondaryColor);
 }
@@ -59,15 +60,14 @@ button {
     border-color: var(--primaryColor) !important;
 }
 
-.custom-control-input:checked ~ 
-    .custom-control-label::before {
-        border-color: var(--primaryColor) !important;
-        background-color: var(--primaryColor) !important;
-    }
+.custom-control-input:checked~.custom-control-label::before {
+    border-color: var(--primaryColor) !important;
+    background-color: var(--primaryColor) !important;
+}
 
 .custom-range::-webkit-slider-thumb {
     background-color: var(--primaryColor) !important;
-}    
+}
 
 .btn:focus {
     outline: none;
@@ -107,7 +107,7 @@ button {
     display: inline-block;
     overflow: hidden;
 }
- 
+
 .widgetHeader {
     padding: 5px 5px;
     display: block;
@@ -138,8 +138,8 @@ button {
     position: absolute;
     overflow: hidden;
 }
-  
-.resizable .resizers{
+
+.resizable .resizers {
     width: 100%;
     height: 100%;
     border: 5px solid #b4b4b4;
@@ -147,10 +147,11 @@ button {
 }
 
 
-.resizable .resizers .resizer{
+.resizable .resizers .resizer {
     width: 16px;
     height: 16px;
-    border-radius: 0%; /*magic to turn square into circle*/
+    border-radius: 0%;
+    /*magic to turn square into circle*/
     background: white;
     position: absolute;
 }
@@ -158,18 +159,22 @@ button {
 .resizable .resizers .resizer.top-left {
     left: -5px;
     top: -5px;
-    cursor: nwse-resize; /*resizer cursor*/
+    cursor: nwse-resize;
+    /*resizer cursor*/
 }
+
 .resizable .resizers .resizer.top-right {
     right: -5px;
     top: -5px;
     cursor: nesw-resize;
 }
+
 .resizable .resizers .resizer.bottom-left {
     left: -5px;
     bottom: -5px;
     cursor: nesw-resize;
 }
+
 .resizable .resizers .resizer.bottom-right {
     right: -5px;
     bottom: -5px;
@@ -298,19 +303,25 @@ input[type=number] {
     transform: rotate(-30deg);
 }
 
-*.unselectable {
-    -moz-user-select: -moz-none;
-    -khtml-user-select: none;
-    -webkit-user-select: none;
-}
 
-:not(input):not(textarea),
-:not(input):not(textarea)::after,
-:not(input):not(textarea)::before {
+body *:not(input):not(textarea):not(.selectable),
+body *:not(input):not(textarea):not(.selectable)::before,
+body *:not(input):not(textarea):not(.selectable)::after {
     -webkit-user-select: none;
     user-select: none;
 }
-input, button, textarea, :focus {
+
+.selectable,
+.selectable::before,
+.selectable::after {
+    -webkit-user-select: text;
+    user-select: text;
+}
+
+input,
+button,
+textarea,
+:focus {
     outline: none;
 }
 
@@ -337,14 +348,14 @@ input, button, textarea, :focus {
     box-shadow: none !important;
     background-color: var(--primaryColor) !important;
     border-color: var(--darkModeMain) !important;
-    color:var(--secondaryColor) !important;
+    color: var(--secondaryColor) !important;
 }
 
 .swal-button:hover {
     background-color: var(--primaryColor2) !important;
 }
 
-.swal-button:active{
+.swal-button:active {
     background-color: var(--primaryColor3) !important;
 }
 

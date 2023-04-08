@@ -1,5 +1,4 @@
 
-
 class LightWidget extends Widget {
 
     constructor(name, initialState) {
@@ -9,7 +8,6 @@ class LightWidget extends Widget {
         LightWidget.widgetList.push(this);
         this.addLightWidgetSpecificHTML();
     }
-
 
     addLightWidgetSpecificHTML() {
         this.header.innerText = this.name;
@@ -26,7 +24,6 @@ class LightWidget extends Widget {
         this.content.style.setProperty("max-height", "56px");
     }
 
-
     static getWidgetFromList(name) {
         for (let i = 0; i < LightWidget.widgetList.length; i++) {
             if (LightWidget.widgetList[i].name == name)
@@ -38,4 +35,6 @@ class LightWidget extends Widget {
 LightWidget.numberOfWidgets = 0;
 LightWidget.updateFunction = null;
 LightWidget.widgetList = [];
-LightWidget.defaultJson = {'title':'', 'initially':false};
+LightWidget.defaultJson = [{ 'title': '', 'initially': false }];
+
+Widget._register(LightWidget);

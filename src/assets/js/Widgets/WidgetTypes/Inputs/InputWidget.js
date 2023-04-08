@@ -1,5 +1,4 @@
 
-
 class InputWidget extends Widget {
 
     constructor(name, initialValue) {
@@ -9,7 +8,6 @@ class InputWidget extends Widget {
         InputWidget.widgetList.push(this);
         this.addInputWidgetSpecificHTML();
     }
-
 
     addInputWidgetSpecificHTML() {
         this.widgetBlock.style.setProperty("max-height", "100px");
@@ -29,7 +27,6 @@ class InputWidget extends Widget {
         this.content.appendChild(this.input);
     }
 
-
     static getWidgetFromList(name) {
         for (let i = 0; i < InputWidget.widgetList.length; i++) {
             if (InputWidget.widgetList[i].name == name)
@@ -41,4 +38,6 @@ class InputWidget extends Widget {
 InputWidget.numberOfWidgets = 0;
 InputWidget.updateFunction = null;
 InputWidget.widgetList = [];
-InputWidget.defaultJson = {'title':'', 'value':''};
+InputWidget.defaultJson = [{ 'title': '', 'value': '' }];
+
+Widget._register(InputWidget);

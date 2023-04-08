@@ -1,5 +1,4 @@
 
-
 class GraphWidget extends Widget {
 
     constructor(name) {
@@ -8,7 +7,6 @@ class GraphWidget extends Widget {
         GraphWidget.widgetList.push(this);
         this.addGraphWidgetSpecificHTML();
     }
-
 
     addGraphWidgetSpecificHTML() {
         this.header.innerText = (this.name);
@@ -42,4 +40,6 @@ class GraphWidget extends Widget {
 GraphWidget.numberOfWidgets = 0;
 GraphWidget.updateFunction = null;
 GraphWidget.widgetList = [];
-GraphWidget.defaultJson = {'title':''};
+GraphWidget.defaultJson = [{ 'title': '' }];
+
+Widget._register(GraphWidget);

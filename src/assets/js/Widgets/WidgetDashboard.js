@@ -8,47 +8,37 @@ class WidgetDashboard {
         this.totalWidgets = 0;
     }
 
-    // isTypeWidget(object) {
-    //     for(let i=0; i<WidgetDashboard.widgetTypeList.length; i++) {
-    //         if(object instanceof WidgetDashboard.widgetTypeList[i]) {
-    //             return true;
-    //         }
-    //     }
-    //     return false;
-    // }
-
-    
     addWidget(widget) {
-        if(widget instanceof Widget) {
-            if(this.widgets[widget.type] == null)
-            this.widgets[widget.type] = [];
+        if (widget instanceof Widget) {
+            if (this.widgets[widget.type] == null)
+                this.widgets[widget.type] = [];
             this.widgets[widget.type].push(widget);
             this.totalWidgets++;
         }
     }
-    
+
     applyToEveryWidget(func) {
-        for(let widgetType in this.widgets) {
-            for(let widget in this.widgets[widgetType]) {
+        for (let widgetType in this.widgets) {
+            for (let widget in this.widgets[widgetType]) {
                 func(this.widgets[widgetType][widget]);
             }
         }
     }
 
     makeWidgetsDraggable() {
-        this.applyToEveryWidget(function(widget) { widget.makeDraggable(); });
+        this.applyToEveryWidget(function (widget) { widget.makeDraggable(); });
     }
 
     makeWidgetsNotDraggable() {
-        this.applyToEveryWidget(function(widget) { widget.makeNotDraggable(); });
+        this.applyToEveryWidget(function (widget) { widget.makeNotDraggable(); });
     }
 
     makeWidgetsResizable() {
-        this.applyToEveryWidget(function(widget) { widget.makeResizable(); });
+        this.applyToEveryWidget(function (widget) { widget.makeResizable(); });
     }
 
     makeWidgetsNotResizable() {
-        this.applyToEveryWidget(function(widget) { widget.makeNotResizable(); });
+        this.applyToEveryWidget(function (widget) { widget.makeNotResizable(); });
     }
 
 
@@ -133,18 +123,18 @@ class WidgetDashboard {
     //             consWindow.style.width = (parseFloat(consWindow.style.width.replace("px", ""))-10+"px");
     //             widgetElements[widgetType][widgetNum]["content"].style.setProperty("padding", "10px 10px 2px 10px");
     //             break;
-    
+
     //         case("inputWidgets"):
     //             var inpWindow = widgetElements[widgetType][widgetNum]["input"];
     //             widgetElements[widgetType][widgetNum]["content"].style.setProperty("padding", "15px 5px");
     //             break;
-    
+
     //         case("buttonWidgets"):
     //             var btnWindow = widgetElements[widgetType][widgetNum]["button"];
     //             widgetElements[widgetType][widgetNum]["content"].style.setProperty("padding", "10px 10px");
     //             btnWindow.style.setProperty("width", (element.getBoundingClientRect().width-37+"px"));
     //             break;
-    
+
     //         case("displayWidgets"):
     //             widgetElements[widgetType][widgetNum]["content"].style.setProperty("padding", "17px 0px");
     //             widgetElements[widgetType][widgetNum]["header"].style.setProperty("padding", "5px 5px");
@@ -258,18 +248,18 @@ class WidgetDashboard {
     //             widgetElements[widgetType][widgetNum]["content"].style.setProperty("padding", "15px 10px");
     //             widgetElements[widgetType][widgetNum]["button"].style.setProperty("width", (widgetArea.getBoundingClientRect().width-37+"px"));
     //             break;
-    
+
     //         case("displayWidgets"):
     //             widgetElements[widgetType][widgetNum]["content"].style.setProperty("padding", "17px 0px");
     //             widgetElements[widgetType][widgetNum]["header"].style.setProperty("padding", "5px 10px");
     //             break;
-    
+
     //         case("inputWidgets"):
     //             let inpSpace = widgetElements[widgetType][widgetNum]["input"];
     //             inpSpace.style.width = (widgetArea.getBoundingClientRect().width-22+"px");
     //             widgetElements[widgetType][widgetNum]["content"].style.setProperty("padding", "20px 0px");
     //             break;
-    
+
     //         case("consoleWidgets"):
     //             let consWindow = widgetElements[widgetType][widgetNum]["textarea"];
     //             let consWindowSpace = widgetElements[widgetType][widgetNum]["content"];
